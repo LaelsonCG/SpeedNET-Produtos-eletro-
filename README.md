@@ -1,254 +1,104 @@
 # 📡 **Speednet - API Produtos (Eletro)**  
 
-API para consulta, comparação e obtenção de informações sobre dispositivos eletrônicos.  
+API para consulta, comparação e obtenção de informações sobre dispositivos eletrônicos.
 
-📍 **Base URL:**  
-```
-https://apis.speednetssh.com.br/eletro/api.php
-```
+## Endpoints
 
-## 📌 **Índice**
-- [Endpoints](#endpoints)
-  - [🔍 Obter Detalhes do Dispositivo](#-obter-detalhes-do-dispositivo)
-  - [⚖️ Comparar Dispositivos](#️-comparar-dispositivos)
-  - [🔎 Pesquisar Dispositivos](#-pesquisar-dispositivos)
-  - [📰 Obter Notícias](#-obter-notícias)
-  - [⭐ Obter Reviews](#-obter-reviews)
-- [📌 Formato das Respostas](#-formato-das-respostas)
-- [📌 Exemplo de Uso](#-exemplo-de-uso)
+### `GET /eletro/api.php?action=device-list`
 
----
+Retorna a lista de dispositivos de acordo com as informações obtidas da API do Google.
 
-## **Endpoints**  
+#### Parâmetros de consulta
 
-### 🔍 **Obter Detalhes do Dispositivo**
-- **Método:** `GET`
-- **Endpoint:**  
-  ```
-  /eletro/api.php?action=device&id={device_id}
-  ```
-- **Descrição:** Retorna detalhes de um dispositivo específico.
+- **action**: Ação a ser realizada pela API. O valor esperado é `device-list`.
 
-#### ✅ **Parâmetros**
-| Parâmetro | Tipo   | Obrigatório | Descrição                       |
-|-----------|--------|-------------|---------------------------------|
-| `id`      | `int`  | ✅          | ID único do dispositivo        |
+#### Exemplo de requisição
 
-#### 📤 **Exemplo de Requisição**
 ```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=device&id=11089'
+GET https://apis.speednetssh.com.br/eletro/api.php?action=device-list
 ```
 
-#### 📥 **Resposta Esperada**
+#### Exemplo de resposta
+
 ```json
 {
   "status": 200,
   "message": "Success",
-  "data": {
-    "device_information": [
-      {
-        "device_title": "Apple iPhone 13 Pro Max",
-        "device_image": "https://example.com/iphone13.jpg",
-        "device_ram": "128GB 6GB",
-        "device_price": "$379.99",
-        "device_buy_url": "https://www.amazon.com/dp/B09LPF4L55"
-      }
-    ]
-  }
+  "data": [
+    {
+      "brand_id": 1,
+      "brand_name": "Nokia",
+      "key": "nokia",
+      "device_list": [
+        {
+          "device_id": 13688,
+          "device_name": "150 Music",
+          "device_type": "150Music 150M",
+          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-150-music-2025.jpg",
+          "key": "nokia_150_music-13688"
+        },
+        {
+          "device_id": 12990,
+          "device_name": "3210",
+          "device_type": "",
+          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-3210.jpg",
+          "key": "nokia_3210-12990"
+        },
+        {
+          "device_id": 12967,
+          "device_name": "235 4G (2024)",
+          "device_type": "",
+          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-235-4g-2024.jpg",
+          "key": "nokia_235_4g_(2024)-12967"
+        },
+        {
+          "device_id": 12381,
+          "device_name": "G42",
+          "device_type": "5G Notch g42 5g",
+          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-g42-5g.jpg",
+          "key": "nokia_g42-12381"
+        },
+        {
+          "device_id": 12139,
+          "device_name": "C32",
+          "device_type": "Notch",
+          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-c32-2023.jpg",
+          "key": "nokia_c32-12139"
+        }
+      ]
+    }
+  ]
 }
 ```
 
----
+### Descrição dos Campos
 
-### ⚖️ **Comparar Dispositivos**
-- **Método:** `POST`
-- **Endpoint:**  
-  ```
-  /eletro/api.php?action=compare
-  ```
-- **Descrição:** Compara dois ou mais dispositivos.
+#### Raiz da Resposta
 
-#### ✅ **Parâmetros**
-| Parâmetro | Tipo  | Obrigatório | Descrição                                     |
-|-----------|------|-------------|-----------------------------------------------|
-| `key`    | `string` | ✅        | Lista de chaves dos dispositivos separados por vírgula |
+- **status**: Código HTTP de status da resposta. Um valor de `200` indica sucesso.
+- **message**: Mensagem descritiva sobre o status da resposta. Exemplo: `"Success"`.
+- **data**: Lista de marcas e dispositivos.
 
-#### 📤 **Exemplo de Requisição**
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=compare' \
---header 'Content-Type: application/json' \
---data '{"key": "apple_iphone_13_pro_max-11089,apple_iphone_12_pro_max-11088"}'
-```
+#### Detalhes de cada Marca
 
-#### 📥 **Resposta Esperada**
-```json
-{
-  "status": 200,
-  "message": "Success",
-  "data": {
-    "device_information": [
-      {
-        "device_title": "Apple iPhone 13 Pro Max",
-        "device_price": "$379.99"
-      },
-      {
-        "device_title": "Apple iPhone 12 Pro Max",
-        "device_price": "$262.30"
-      }
-    ]
-  }
-}
-```
+- **brand_id**: ID único da marca.
+- **brand_name**: Nome da marca do fabricante.
+- **key**: Chave única da marca, usada para filtrar ou identificar a marca.
+- **device_list**: Lista de dispositivos associados à marca.
+
+#### Detalhes de cada Dispositivo
+
+- **device_id**: ID único do dispositivo.
+- **device_name**: Nome do dispositivo.
+- **device_type**: Tipo do dispositivo (opcional).
+- **device_image**: URL da imagem do dispositivo.
+- **key**: Chave única do dispositivo.
 
 ---
 
-### 🔎 **Pesquisar Dispositivos**
-- **Método:** `GET`
-- **Endpoint:**  
-  ```
-  /eletro/api.php?action=search&query={search_query}
-  ```
-- **Descrição:** Pesquisa dispositivos com base em um termo.
+## Como usar
 
-#### ✅ **Parâmetros**
-| Parâmetro | Tipo   | Obrigatório | Descrição                       |
-|-----------|--------|-------------|---------------------------------|
-| `query`  | `string` | ✅        | Termo de pesquisa              |
-
-#### 📤 **Exemplo de Requisição**
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=search&query=iPhone'
-```
-
-#### 📥 **Resposta Esperada**
-```json
-{
-  "status": 200,
-  "message": "Success",
-  "data": {
-    "devices": [
-      {
-        "device_title": "iPhone 13 Pro Max",
-        "device_price": "$379.99"
-      },
-      {
-        "device_title": "iPhone 12 Pro Max",
-        "device_price": "$262.30"
-      }
-    ]
-  }
-}
-```
-
+1. Faça uma requisição `GET` para o endpoint `/eletro/api.php?action=device-list`.
+2. A resposta será um JSON contendo a lista de dispositivos agrupada por marca.
+3. Para adicionar mais funcionalidades, basta expandir o arquivo `api.php` com novas rotas e lógica.
 ---
-
-### 📰 **Obter Notícias**
-- **Método:** `GET`
-- **Endpoint:**  
-  ```
-  /eletro/api.php?action=news
-  ```
-- **Descrição:** Obtém as últimas notícias de tecnologia.
-
-#### 📤 **Exemplo de Requisição**
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=news'
-```
-
-#### 📥 **Resposta Esperada**
-```json
-{
-  "status": 200,
-  "message": "Success",
-  "data": {
-    "news": [
-      {
-        "title": "Novo iPhone 14 lançado!",
-        "image": "https://example.com/news.jpg",
-        "link": "https://technews.com/iphone14"
-      }
-    ]
-  }
-}
-```
-
----
-
-### ⭐ **Obter Reviews**
-- **Método:** `GET`
-- **Endpoint:**  
-  ```
-  /eletro/api.php?action=reviews
-  ```
-- **Descrição:** Retorna as últimas análises de dispositivos.
-
-#### 📤 **Exemplo de Requisição**
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=reviews'
-```
-
-#### 📥 **Resposta Esperada**
-```json
-{
-  "status": 200,
-  "message": "Success",
-  "data": {
-    "reviews": [
-      {
-        "title": "Review do iPhone 13 Pro Max",
-        "image": "https://example.com/review.jpg",
-        "link": "https://technews.com/review-iphone13"
-      }
-    ]
-  }
-}
-```
-
----
-
-## 📌 **Formato das Respostas**  
-
-Todas as respostas seguem o formato JSON, incluindo:  
-
-- `status`: Código HTTP da requisição.  
-- `message`: Mensagem indicando o resultado da requisição.  
-- `data`: Conteúdo retornado.  
-
-#### 📥 **Exemplo de Resposta de Erro**
-```json
-{
-  "status": 404,
-  "message": "Device not found",
-  "data": null
-}
-```
-
----
-
-## 📌 **Exemplo de Uso**  
-
-### 1️⃣ Obter detalhes de um dispositivo  
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=device&id=11089'
-```
-
-### 2️⃣ Comparar dois dispositivos  
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=compare' \
---header 'Content-Type: application/json' \
---data '{"key": "device1,device2"}'
-```
-
-### 3️⃣ Pesquisar dispositivos  
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=search&query=iPhone'
-```
-
-### 4️⃣ Obter notícias  
-```bash
-curl --location 'https://apis.speednetssh.com.br/eletro/api.php?action=news'
-```
-
----
-
-📢 **Contribuição:** Caso tenha sugestões ou encontre bugs, envie um PR ou issue no repositório. 🚀
