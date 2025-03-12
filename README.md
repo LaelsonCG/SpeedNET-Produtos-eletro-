@@ -38,20 +38,6 @@ GET https://apis.speednetssh.com.br/eletro/api.php?action=device-list
           "key": "nokia_150_music-13688"
         },
         {
-          "device_id": 12990,
-          "device_name": "3210",
-          "device_type": "",
-          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-3210.jpg",
-          "key": "nokia_3210-12990"
-        },
-        {
-          "device_id": 12967,
-          "device_name": "235 4G (2024)",
-          "device_type": "",
-          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-235-4g-2024.jpg",
-          "key": "nokia_235_4g_(2024)-12967"
-        },
-        {
           "device_id": 12381,
           "device_name": "G42",
           "device_type": "5G Notch g42 5g",
