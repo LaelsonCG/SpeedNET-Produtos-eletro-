@@ -92,3 +92,44 @@ GET https://apis.speednetssh.com.br/eletro/api.php?action=search&query=Samsung%2
 
 ---
 
+### **3. Obter Detalhes do Dispositivo**
+
+**URL**:  
+`https://apis.speednetssh.com.br/eletro/api.php?action=device-detail&key={key}`
+
+**Método**:  
+`GET`
+
+**Parâmetros**:
+- `key` (obrigatório): O `key` do dispositivo para o qual você deseja obter os detalhes. Este parâmetro será enviado via `POST` para a API do Google.
+
+**Descrição**:  
+Retorna os detalhes completos de um dispositivo, incluindo informações como nome, tipo, imagem e especificações.
+
+**Exemplo de requisição**:
+```bash
+GET https://apis.speednetssh.com.br/eletro/api.php?action=device-detail&key=apple_iphone_13_pro_max-11089
+```
+
+**Exemplo de resposta**:
+```json
+{
+  "status": 200,
+  "message": "Success",
+  "data": {
+    "device_id": 11089,
+    "device_name": "iPhone 13 Pro Max",
+    "brand_name": "Apple",
+    "device_type": "Smartphone",
+    "device_image": "https://example.com/iphone-13-pro-max.jpg",
+    "specifications": {
+      "display": "6.7 inch OLED",
+      "battery": "3687 mAh",
+      "processor": "A15 Bionic",
+      ...
+    }
+  }
+}
+```
+
+---
