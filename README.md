@@ -2,24 +2,25 @@
 
 API para consulta, comparação e obtenção de informações sobre dispositivos eletrônicos.
 
-## Endpoints
+---
 
-### `GET /eletro/api.php?action=device-list`
+## **Documentação da API**
 
-Retorna a lista de dispositivos de acordo com as informações obtidas da API do Google.
+### **1. Listar Dispositivos**
 
-#### Parâmetros de consulta
+**URL**:  
+`https://apis.speednetssh.com.br/eletro/api.php?action=device-list`
 
-- **action**: Ação a ser realizada pela API. O valor esperado é `device-list`.
+**Método**:  
+`GET`
 
-#### Exemplo de requisição
+**Parâmetros**:  
+Nenhum.
 
-```bash
-GET https://apis.speednetssh.com.br/eletro/api.php?action=device-list
-```
+**Descrição**:  
+Retorna a lista de dispositivos disponíveis, incluindo o nome da marca, ID da marca e os dispositivos com seus respectivos detalhes.
 
-#### Exemplo de resposta
-
+**Exemplo de resposta**:
 ```json
 {
   "status": 200,
@@ -36,55 +37,58 @@ GET https://apis.speednetssh.com.br/eletro/api.php?action=device-list
           "device_type": "150Music 150M",
           "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-150-music-2025.jpg",
           "key": "nokia_150_music-13688"
-        },
-        {
-          "device_id": 12381,
-          "device_name": "G42",
-          "device_type": "5G Notch g42 5g",
-          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-g42-5g.jpg",
-          "key": "nokia_g42-12381"
-        },
-        {
-          "device_id": 12139,
-          "device_name": "C32",
-          "device_type": "Notch",
-          "device_image": "https://fdn2.gsmarena.com/vv/bigpic/nokia-c32-2023.jpg",
-          "key": "nokia_c32-12139"
         }
+        ...
       ]
     }
   ]
 }
 ```
 
-### Descrição dos Campos
+---
 
-#### Raiz da Resposta
+### **2. Pesquisa de Dispositivos**
 
-- **status**: Código HTTP de status da resposta. Um valor de `200` indica sucesso.
-- **message**: Mensagem descritiva sobre o status da resposta. Exemplo: `"Success"`.
-- **data**: Lista de marcas e dispositivos.
+**URL**:  
+`https://apis.speednetssh.com.br/eletro/api.php?action=search&query={query}`
 
-#### Detalhes de cada Marca
+**Método**:  
+`GET`
 
-- **brand_id**: ID único da marca.
-- **brand_name**: Nome da marca do fabricante.
-- **key**: Chave única da marca, usada para filtrar ou identificar a marca.
-- **device_list**: Lista de dispositivos associados à marca.
+**Parâmetros**:
+- `query` (obrigatório): Termo de busca para pesquisar dispositivos.
 
-#### Detalhes de cada Dispositivo
+**Descrição**:  
+Retorna a lista de dispositivos que correspondem ao termo de pesquisa fornecido.
 
-- **device_id**: ID único do dispositivo.
-- **device_name**: Nome do dispositivo.
-- **device_type**: Tipo do dispositivo (opcional).
-- **device_image**: URL da imagem do dispositivo.
-- **key**: Chave única do dispositivo.
+**Exemplo de requisição**:
+```bash
+GET https://apis.speednetssh.com.br/eletro/api.php?action=search&query=Samsung%20tab%20s7+
+```
+
+**Exemplo de resposta**:
+```json
+{
+  "status": 200,
+  "message": "Success",
+  "data": [
+    {
+      "device_id": 13688,
+      "device_name": "Samsung Galaxy Tab S7+",
+      "device_type": "Tablet",
+      "device_image": "https://example.com/samsung-tab-s7+.jpg",
+      "key": "samsung_tab_s7+-13688"
+    }
+  ]
+}
+```
 
 ---
 
-## Como usar
+### **Erros Comuns**
 
-1. Faça uma requisição `GET` para o endpoint `/eletro/api.php?action=device-list`.
-2. A resposta será um JSON contendo a lista de dispositivos agrupada por marca.
-3. Para adicionar mais funcionalidades, basta expandir o arquivo `api.php` com novas rotas e lógica.
+- **400 Bad Request**: Quando o parâmetro `query` não é fornecido para a pesquisa.
+- **500 Internal Server Error**: Quando ocorre um erro ao fazer a requisição ou processar a resposta.
+
 ---
+
